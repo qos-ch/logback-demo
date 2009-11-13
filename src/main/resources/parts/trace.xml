@@ -1,0 +1,7 @@
+  <turboFilter class="ch.qos.logback.classic.turbo.MarkerFilter">
+	  <Name>TRACE</Name>
+		<Marker>TRACE</Marker>
+		<OnMatch>DENY</OnMatch>
+	</turboFilter>
+	
+	

@@ -1,0 +1,127 @@
+<?xml version="1.0"?>
+<project>
+  <name>logback-demo</name>
+
+  <modelVersion>4.0.0</modelVersion>
+  <groupId>ch.qos.logback</groupId>
+  <artifactId>logback-demo</artifactId>
+  <packaging>war</packaging>
+  <version>1.0</version>
+
+  <properties>
+    <lb.version>0.9.16-SNAPSHOT</lb.version>
+  </properties>
+
+
+  <dependencies>
+    <dependency>
+	  <groupId>struts</groupId>
+	  <artifactId>struts</artifactId>
+	  <version>1.2.9</version>
+	  <scope>compile</scope>
+    </dependency>
+
+    <dependency>
+      <groupId>javax.servlet</groupId>
+      <artifactId>servlet-api</artifactId>
+      <version>2.4</version>
+      <scope>provided</scope>
+    </dependency>
+
+    <dependency>
+    	<groupId>ch.qos.logback</groupId>
+    	<artifactId>logback-classic</artifactId>
+    	<version>${lb.version}</version>
+    	<scope>compile</scope>
+    	<exclusions>
+        <!--
+    		<exclusion>
+    			<groupId>ch.qos.logback</groupId>
+    			<artifactId>logback-core</artifactId>
+    		</exclusion>
+        -->
+    	</exclusions>
+    </dependency>
+
+    <dependency>
+      <groupId>janino</groupId>
+      <artifactId>janino</artifactId>
+      <version>2.4.3</version>
+    </dependency>
+
+    <dependency>
+    	<groupId>ch.qos.logback</groupId>
+    	<artifactId>logback-access</artifactId>
+      <version>${lb.version}</version>
+    	<scope>provided</scope>
+    </dependency>
+
+    <dependency>
+      <groupId>ch.qos.logback</groupId>
+      <artifactId>logback-core</artifactId>
+      <version>${lb.version}</version>
+    	<scope>provided</scope>
+    </dependency>
+  </dependencies>
+
+  <build>
+    <plugins>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-war-plugin</artifactId>
+        <version>2.0.1</version>
+        <configuration>
+          <archive>
+          </archive>
+        </configuration>
+      </plugin>
+
+      <plugin>
+      	<groupId>org.mortbay.jetty</groupId>
+      	<artifactId>maven-jetty-plugin</artifactId>
+        <!-- Plugin version == server version -->
+        <version>6.1.12</version>        
+      	<configuration>
+      		<scanIntervalSeconds>0</scanIntervalSeconds>
+      		<jettyConfig>${basedir}/src/etc/jetty.xml</jettyConfig>
+      	  <!-- <jettyConfig>src/etc/jetty-jmx.xml</jettyConfig> -->
+          
+      	</configuration>
+      	<dependencies>
+      		<dependency>
+      			<groupId>ch.qos.logback</groupId>
+      			<artifactId>logback-access</artifactId>
+            <version>${lb.version}</version>
+      		</dependency>
+      		<dependency>
+      			<groupId>ch.qos.logback</groupId>
+      			<artifactId>logback-core</artifactId>
+     				<version>${lb.version}</version>
+      		</dependency>
+      		<dependency>
+      			<groupId>janino</groupId>
+      			<artifactId>janino</artifactId>
+      			<version>2.4.3</version>
+      		</dependency>
+
+          <dependency>
+            <groupId>mx4j</groupId>
+            <artifactId>mx4j-tools</artifactId>
+            <version>3.0.1</version>
+          </dependency>
+
+      	</dependencies>
+      </plugin>
+
+      <plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<configuration>
+					<source>1.5</source>
+					<target>1.5</target>
+				</configuration>
+			</plugin>
+    </plugins>
+  </build>
+
+</project> 

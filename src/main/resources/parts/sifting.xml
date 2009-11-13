@@ -1,0 +1,19 @@
+  <appender name="SIFT"
+    class="ch.qos.logback.classic.sift.SiftingAppender">
+    <discriminator>
+      <Key>userid</Key>
+      <DefaultValue>unknown</DefaultValue>
+    </discriminator>
+    <sift>
+      <appender name="FILE-${userid}"
+        class="ch.qos.logback.core.FileAppender">
+        <File>${userid}.log</File>
+        <Append>false</Append>
+        <layout>
+          <Pattern>
+            %d [%thread] %-55(%-5level %10mdc %logger{35}) - %msg%n
+          </Pattern>
+        </layout>
+      </appender>
+    </sift>
+  </appender>

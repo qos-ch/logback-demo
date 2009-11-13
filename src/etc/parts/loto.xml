@@ -1,0 +1,23 @@
+	<appender name="STDOUT_LOTTO"
+		class="ch.qos.logback.core.ConsoleAppender">
+		<filter class="ch.qos.logback.core.filter.EvaluatorFilter">
+			<evaluator name="lotto_eval">
+				<Expression>
+					url.matches(request.getRequestURL().toString())
+				</Expression>
+				<matcher name="url">
+					<regex>lotto.do</regex>
+					<caseSensitive>false</caseSensitive>
+				</matcher>
+			</evaluator>
+			<OnMatch>ACCEPT</OnMatch>
+			<OnMismatch>DENY</OnMismatch>
+		</filter>
+		<layout class="ch.qos.logback.access.PatternLayout">
+			<Pattern>
+				LOTTO: %A [%r] Guess=%reqParameter{guessed_number}
+			</Pattern>
+		</layout>
+	</appender>
+
+	<appender-ref ref="STDOUT_LOTTO" />

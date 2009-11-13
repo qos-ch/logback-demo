@@ -1,0 +1,6 @@
+	<appender name="CYCLIC"
+		class="ch.qos.logback.core.read.CyclicBufferAppender">
+		<MaxSize>512</MaxSize>
+	</appender>
+
+	<appender-ref ref="CYCLIC" />

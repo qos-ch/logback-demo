@@ -1,0 +1,20 @@
+
+
+	<appender name="SMTP"
+		class="ch.qos.logback.access.net.SMTPAppender">
+		<layout class="ch.qos.logback.access.html.HTMLLayout">
+			<Pattern>%h%l%u%t%r%s%b</Pattern>
+		</layout>
+
+		<Evaluator class="ch.qos.logback.access.net.URLEvaluator">
+			<URL>winner.jsp</URL>
+		</Evaluator>
+		<From>ceki@qos.ch</From>
+		<SMTPHost>gmail-smtp-in.l.google.com</SMTPHost>
+		<Subject>Winner detected</Subject>
+	  <To>sebastien.pennec@gmail.com</To>
+		<To>ceki.gulcu@gmail.com</To>			
+	</appender>
+
+
+	<appender-ref ref="SMTP" />

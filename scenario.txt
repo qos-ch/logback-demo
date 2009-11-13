@@ -1,0 +1,58 @@
+Basic
+=====
+
+Start with a demo of basic logging using a ConsoleAppender and
+RollingFileAppender.
+
+Contents: src/main/resources/logback-basic.xml
+
+Cyclic
+======
+Add CyclicBufferAppender so that logs can be viewed through a servlet
+Contents: src/main/resources/cyclic.xml
+
+Cyclic2
+=======
+Filter out messages after 10 seconds.
+Contents: src/main/resources/cyclic-with-evaluator.xml
+Restart jetty.
+
+TurboFilter
+===========
+Turn off all logging except user sebastien.
+Contents: src/main/resources/mdc_turbo_filter.xml
+
+Importance of parameterized form
+================================
+
+Log off (as sebastien). Turn all logging off. Results should should
+that it takes about 1 microsecs to perform the "str"+i+".."
+computation, whereas the "str {} ...", i form is about 30 times
+faster.
+
+Marker example
+==============
+Disable logging for all TRACE.
+Contents: src/main/resources/trace.xml
+
+SiftingAppender example
+=======================
+
+separate logging based on user.
+Contents: src/main/resources/sifting.xml
+
+Access logs
+============
+on the console
+Contents: src/etc/logback-console-MINI.xml
+
+Lottery example
+===============
+Trigger an email when the winner page is displayed.
+Contents: src/etc/logback-console-MINI.xml
+
+
+Counting access filter
+======================
+show access count using JMX
+Contents: src/etc/counting_filter.xml

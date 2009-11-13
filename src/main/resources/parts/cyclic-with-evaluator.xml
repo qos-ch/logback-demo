@@ -1,0 +1,16 @@
+	<appender name="CYCLIC"
+		class="ch.qos.logback.core.read.CyclicBufferAppender">
+		<filter class="ch.qos.logback.core.filter.EvaluatorFilter">
+			<evaluator name="loggingTaskEval">
+				<expression>
+					logger.getName().contains("LoggingTask") &amp;&amp;
+					message.contains("Howdydy-diddly-ho") &amp;&amp;
+					(timeStamp - event.getStartTime()) >= 20000
+				</expression>
+			</evaluator>
+			<OnMatch>DENY</OnMatch>
+		</filter>
+		<MaxSize>512</MaxSize>
+	</appender>
+
+		<appender-ref ref="CYCLIC" />

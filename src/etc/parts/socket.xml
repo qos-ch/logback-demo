@@ -1,0 +1,7 @@
+	<!-- 
+		<appender name="SOCKET" class="ch.qos.logback.access.net.SocketAppender">
+		<RemoteHost>localhost</RemoteHost>
+		<Port>1234</Port>
+		<ReconnectionDelay>10000</ReconnectionDelay>
+		</appender>
+	-->

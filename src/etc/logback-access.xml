@@ -1,0 +1,95 @@
+<configuration>
+ 
+	<appender name="STDOUT"
+		class="ch.qos.logback.core.ConsoleAppender">
+		<layout class="ch.qos.logback.access.PatternLayout">
+			<Pattern>%h %l %u %t \"%r\" %s %b</Pattern>
+		</layout>
+	</appender>
+	
+	<!-- Lottery to Console
+	 <appender name="STDOUT_LOTTERY"
+    class="ch.qos.logback.core.ConsoleAppender">
+    <filter class="ch.qos.logback.core.filter.EvaluatorFilter">
+      <evaluator name="lotto_eval">
+        <Expression>
+          url.matches(event.getRequestURL().toString())
+        </Expression>
+        <matcher name="url">
+          <regex>Lottery.do</regex>
+          <caseSensitive>false</caseSensitive>
+        </matcher>
+      </evaluator>
+      <OnMatch>ACCEPT</OnMatch>
+      <OnMismatch>DENY</OnMismatch>
+    </filter>
+    <layout class="ch.qos.logback.access.PatternLayout">
+      <Pattern>
+        LOTTERY: %A [%r] Guess=%reqParameter{guessed_number}
+      </Pattern>
+    </layout>
+  </appender> 
+  --> 
+  
+  <!-- Lottery to Email
+  <appender name="SMTP"
+		class="ch.qos.logback.access.net.SMTPAppender">
+		<layout class="ch.qos.logback.access.html.HTMLLayout">
+			<Pattern>%h%l%u%t%r%s%b</Pattern>
+		</layout>
+
+		<Evaluator class="ch.qos.logback.access.net.URLEvaluator">
+			<URL>winner.jsp</URL>
+		</Evaluator>
+    <From>choose.a.sender.email@yourOrg.com</From> 
+    <SMTPHost>your.smtp.host</SMTPHost>
+    <Subject>Winner detected</Subject>
+    <To>your.email@yourOrg.com</To>
+    <To>another.email@yourOrg.com</To>     		
+	</appender>
+	-->
+	 
+	
+	<!-- Part JMX -->
+  <filter class="ch.qos.logback.access.filter.CountingFilter">
+		<name>countingFilter</name>
+	</filter>	
+	-->
+
+  <appender name="SIFTING" class="ch.qos.logback.access.sift.SiftingAppender">
+    <Discriminator class="ch.qos.logback.access.sift.AccessEventDiscriminator">
+      <Key>id</Key>
+      <DefaultValue>NA</DefaultValue>
+      <!-- 
+      <FieldName>COOKIE</FieldName>
+      <AdditionalKey>JSESSIONID</AdditionalKey>
+      -->
+      <FieldName>REQUEST_ATTRIBUTE</FieldName>
+      <AdditionalKey>a</AdditionalKey>
+
+    </Discriminator>
+    <sift>
+       <appender name="${id}" class="ch.qos.logback.core.FileAppender">
+        <File>session/${id}.log</File>
+        <layout class="ch.qos.logback.access.PatternLayout">
+          <Pattern>%h %l %u %t \"%r\" %s %b</Pattern>
+        </layout>
+      </appender>
+    </sift>
+  </appender>
+
+  <appender-ref ref="SIFTING" />
+
+  <!--  
+  <appender-ref ref="STDOUT" />
+  -->
+
+  <!-- Lottery to Console 
+	<appender-ref ref="STDOUT_LOTTERY" />
+	-->
+  
+  <!-- Lottery to Email
+  <appender-ref ref="SMTP" /> 
+  -->
+  
+</configuration>

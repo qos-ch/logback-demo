@@ -1,0 +1,76 @@
+<configuration>
+
+	<filter class="ch.qos.logback.access.filter.CountingFilter">
+		<name>countingFilter</name>
+	</filter>
+
+	<appender name="STDOUT_LOTTERY"
+		class="ch.qos.logback.core.ConsoleAppender">
+		<filter class="ch.qos.logback.core.filter.EvaluatorFilter">
+			<evaluator name="lottery_eval">
+				<Expression>
+					url.matches(event.getRequestURL().toString())
+				</Expression>
+				<matcher name="url">
+					<regex>lottery.do</regex>
+					<caseSensitive>false</caseSensitive>
+				</matcher>
+			</evaluator>
+			<OnMatch>ACCEPT</OnMatch>
+			<OnMismatch>DENY</OnMismatch>
+		</filter>
+		<layout class="ch.qos.logback.access.PatternLayout">
+			<Pattern>
+				LOTTERY: %A [%r] Guess=%reqParameter{guessed_number}
+			</Pattern>
+		</layout>
+	</appender>
+
+	<appender name="STDOUT"
+		class="ch.qos.logback.core.ConsoleAppender">
+		<layout class="ch.qos.logback.access.PatternLayout">
+			<Pattern>%h %l %u %t \"%r\" %s %b</Pattern>
+		</layout>
+	</appender>
+
+	<!-- 
+		<appender name="SOCKET" class="ch.qos.logback.access.net.SocketAppender">
+		<RemoteHost>localhost</RemoteHost>
+		<Port>1234</Port>
+		<ReconnectionDelay>10000</ReconnectionDelay>
+		</appender>
+	-->
+
+	<appender name="SMTP"
+		class="ch.qos.logback.access.net.SMTPAppender">
+		<layout class="ch.qos.logback.access.html.HTMLLayout">
+			<Pattern>%h%l%u%t%r%s%b</Pattern>
+		</layout>
+
+		<Evaluator class="ch.qos.logback.access.net.URLEvaluator">
+			<URL>winner.jsp</URL>
+		</Evaluator>
+		<From>ceki@qos.ch</From>
+		<SMTPHost>mail.qos.ch</SMTPHost>
+
+		<!-- 
+      <SMTPHost>mail.qos.ch</SMTPHost> 
+      <SMTPHost>smtp.mail.yahoo.com</SMTPHost>
+			<SMTPHost>gmail-smtp-in.l.google.com</SMTPHost>
+		-->
+
+		<Subject>Winner detected</Subject>
+		<!-- 
+    A GMail address is ok as long
+    as the From address doesn't look suspect. 
+    If so, the mail is identified as spam by GMail. 
+			
+			<To>ceki.gulcu@gmail.com</To>
+			
+		-->
+		<To>sebastien@qos.ch</To>
+	</appender>
+	<appender-ref ref="STDOUT" />
+	<appender-ref ref="STDOUT_LOTTERY" />
+	<appender-ref ref="SMTP" />
+</configuration>

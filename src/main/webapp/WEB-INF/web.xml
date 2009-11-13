@@ -1,0 +1,136 @@
+<web-app xmlns="http://java.sun.com/xml/ns/j2ee"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://java.sun.com/xml/ns/j2ee http://java.sun.com/xml/ns/j2ee/web-app_2_4.xsd"
+	version="2.4">
+
+  <display-name>logback-demo</display-name>
+  
+   <filter>
+      <filter-name>mdc_filter</filter-name>
+      <filter-class>
+       ch.qos.logback.demo.UserServletFilter
+      </filter-class>
+   </filter>
+   <filter-mapping>
+   <filter-name>mdc_filter</filter-name>
+     <url-pattern>/*</url-pattern>
+    </filter-mapping>
+
+  
+  
+  <!-- Used when testing multiple contexts -->
+  <env-entry>
+   <description>JNDI logging context for this app</description>
+   <env-entry-name>logback/context-name</env-entry-name>
+   <env-entry-type>java.lang.String</env-entry-type>
+   <env-entry-value>DemoContext</env-entry-value>
+  </env-entry>
+  
+  <env-entry>
+   <description>URL for configuring logback context</description>
+   <env-entry-name>logback/configuration-resource</env-entry-name>
+   <env-entry-type>java.lang.String</env-entry-type>
+   <env-entry-value>logback-demo.xml</env-entry-value>
+  </env-entry>
+  
+  <servlet>
+		<servlet-name>action</servlet-name>
+		<servlet-class>
+			org.apache.struts.action.ActionServlet
+		</servlet-class>
+		<init-param>
+			<param-name>config</param-name>
+			<param-value>/WEB-INF/struts-config.xml</param-value>
+		</init-param>
+		<init-param>
+			<param-name>debug</param-name>
+			<param-value>2</param-value>
+		</init-param>
+		<init-param>
+			<param-name>detail</param-name>
+			<param-value>2</param-value>
+		</init-param>
+		<load-on-startup>2</load-on-startup>
+	</servlet>
+
+
+	<!-- Standard Action Servlet Mapping -->
+	<servlet-mapping>
+		<servlet-name>action</servlet-name>
+		<url-pattern>*.do</url-pattern>
+	</servlet-mapping>
+
+
+	<!-- The Usual Welcome File List -->
+	<welcome-file-list>
+		<welcome-file>index.jsp</welcome-file>
+	</welcome-file-list>
+
+
+	<!-- Struts Tag Library Descriptors -->
+	<jsp-config>
+		<taglib>
+			<taglib-uri>/tags/struts-bean</taglib-uri>
+			<taglib-location>/WEB-INF/struts-bean.tld</taglib-location>
+		</taglib>
+
+		<taglib>
+			<taglib-uri>/tags/struts-html</taglib-uri>
+			<taglib-location>/WEB-INF/struts-html.tld</taglib-location>
+		</taglib>
+
+		<taglib>
+			<taglib-uri>/tags/struts-logic</taglib-uri>
+			<taglib-location>/WEB-INF/struts-logic.tld</taglib-location>
+		</taglib>
+
+		<taglib>
+			<taglib-uri>/tags/struts-nested</taglib-uri>
+			<taglib-location>
+				/WEB-INF/struts-nested.tld
+			</taglib-location>
+		</taglib>
+
+		<taglib>
+			<taglib-uri>/tags/struts-tiles</taglib-uri>
+			<taglib-location>/WEB-INF/struts-tiles.tld</taglib-location>
+		</taglib>
+	</jsp-config>
+	
+	<!-- Other servlet config -->
+  <listener>
+    <listener-class>ch.qos.logback.demo.ContextListener</listener-class>
+  </listener>
+
+  <servlet>
+    <servlet-name>ViewLastLog</servlet-name>
+    <servlet-class>ch.qos.logback.demo.ViewLastLog</servlet-class>
+  </servlet>
+
+  <servlet>
+    <servlet-name>ViewStatusMessages</servlet-name>
+    <servlet-class>ch.qos.logback.classic.ViewStatusMessagesServlet</servlet-class>
+  </servlet>
+
+  <servlet>
+    <servlet-name>AccessViewStatusMessages</servlet-name>
+    <servlet-class>ch.qos.logback.access.ViewStatusMessagesServlet</servlet-class>
+  </servlet>
+    
+  <servlet-mapping>
+    <servlet-name>ViewLastLog</servlet-name>
+    <url-pattern>/lastLog/*</url-pattern>
+  </servlet-mapping>
+ 
+  <servlet-mapping>
+    <servlet-name>ViewStatusMessages</servlet-name>
+    <url-pattern>/lbClassicStatus</url-pattern>
+  </servlet-mapping>
+
+  <servlet-mapping>
+    <servlet-name>AccessViewStatusMessages</servlet-name>
+    <url-pattern>/lbAccessStatus</url-pattern>
+  </servlet-mapping>
+       
+</web-app>
+

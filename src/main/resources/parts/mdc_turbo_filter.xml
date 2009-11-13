@@ -1,0 +1,5 @@
+	<turboFilter class="ch.qos.logback.classic.turbo.MDCFilter">
+		<MDCKey>username</MDCKey>
+		<Value>sebastien</Value>
+		<OnMatch>ACCEPT</OnMatch>
+	</turboFilter>

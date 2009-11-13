@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+  
+<configuration>
+
+  <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
+    <layout>
+      <pattern>
+        %d{HH:mm:ss.SSS} [%thread] %-5level %logger{32} - %msg%n
+      </pattern>
+    </layout>
+  </appender>
+
+  <appender name="FILE"
+    class="ch.qos.logback.core.rolling.RollingFileAppender">
+    <File>logFile.log</File>
+    <rollingPolicy
+      class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+      <FileNamePattern>
+        logFile.%d{yyyy-MM-dd_HH-mm}.log
+      </FileNamePattern>
+      <maxHistory>5</maxHistory>
+    </rollingPolicy>
+
+    <layout>
+      <Pattern>
+        %-26(%d{HH:mm:ss,SSS} [%thread]) %-5level %logger{32} - %msg%n
+      </Pattern>
+    </layout>
+  </appender>
+
+  <!-- Basic Cyclic buffer -->
+  <appender name="CYCLIC"
+            class="ch.qos.logback.core.read.CyclicBufferAppender">
+    <MaxSize>512</MaxSize>
+  </appender>
+
+  
+
+  <!-- TurboFilter: by MDC value -->
+  <turboFilter class="ch.qos.logback.classic.turbo.MDCFilter">
+    <MDCKey>userid</MDCKey>
+    <Value>sebastien</Value>
+    <OnMatch>ACCEPT</OnMatch>
+  </turboFilter>
+
+
+  <appender name="SIFT"
+    class="ch.qos.logback.classic.sift.SiftingAppender">
+    <discriminator>
+      <Key>userid</Key>
+      <DefaultValue>unknown</DefaultValue>
+    </discriminator>
+    <sift>
+      <appender name="FILE-${userid}"
+        class="ch.qos.logback.core.FileAppender">
+        <File>${userid}.log</File>
+        <Append>false</Append>
+        <layout>
+          <Pattern>
+            %d [%thread] %-55(%-5level %10mdc %logger{35}) - %msg%n
+          </Pattern>
+        </layout>
+      </appender>
+    </sift>
+  </appender>
+
+
+  <!-- JMX Configurator  -->
+  <jmxConfigurator />
+
+
+  <root level="DEBUG">
+    <appender-ref ref="STDOUT" />
+    <appender-ref ref="FILE" />
+    <appender-ref ref="CYCLIC" /> 
+    <appender-ref ref="SIFT" /> 
+  </root>
+
+</configuration>

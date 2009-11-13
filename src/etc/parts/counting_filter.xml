@@ -1,0 +1,3 @@
+  <filter class="ch.qos.logback.access.filter.CountingFilter">
+		<name>countingFilter</name>
+	</filter>
