@@ -67,7 +67,7 @@ public class Runner {
    
       Runnable runnable = new LoggingTask("Howdydy-diddly-ho");
       scheduledExecutorService.scheduleAtFixedRate(runnable,
-          0, 10000, TimeUnit.MILLISECONDS);
+          0, 100, TimeUnit.MILLISECONDS);
     
   }
 

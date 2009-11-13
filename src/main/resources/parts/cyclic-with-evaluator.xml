@@ -3,9 +3,9 @@
 		<filter class="ch.qos.logback.core.filter.EvaluatorFilter">
 			<evaluator name="loggingTaskEval">
 				<expression>
-					logger.getName().contains("LoggingTask") &amp;&amp;
+					logger.contains("LoggingTask") &amp;&amp;
 					message.contains("Howdydy-diddly-ho") &amp;&amp;
-					(timeStamp - event.getStartTime()) >= 20000
+					(timeStamp - loggerContext.getBirthTime()) >= 20000
 				</expression>
 			</evaluator>
 			<OnMatch>DENY</OnMatch>

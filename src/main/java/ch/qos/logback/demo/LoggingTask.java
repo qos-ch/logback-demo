@@ -24,7 +24,11 @@ public class LoggingTask implements Runnable {
   }
 
   public void run() {
-    logger.info(HOWDY_MARKER, msg + " - " + (i++), new Exception("e"));
+    if(i % 100 == 99) {
+      logger.info(HOWDY_MARKER, msg + " - " + (i++), new Exception("e"));
+    } else {
+      logger.trace("x {]", i++);
+    }
   }
 
 }

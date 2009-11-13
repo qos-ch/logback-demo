@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" ?>
   
-<configuration>
+<configuration scan="true" scanPeriod="3 seconds">
 
   <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
     <layout>
@@ -31,20 +31,29 @@
   <!-- Basic Cyclic buffer -->
   <appender name="CYCLIC"
             class="ch.qos.logback.core.read.CyclicBufferAppender">
+    <filter class="ch.qos.logback.core.filter.EvaluatorFilter">
+      <evaluator name="loggingTaskEval">
+        <expression>
+          logger.contains("LoggingTask") &amp;&amp;
+          message.contains("Howdydy-diddly-ho") &amp;&amp;
+          (timeStamp - loggerContext.getBirthTime()) >= 20000
+        </expression>
+      </evaluator>
+			<OnMatch>DENY</OnMatch>
+    </filter>
     <MaxSize>512</MaxSize>
   </appender>
-
   
-
   <!-- TurboFilter: by MDC value -->
+  <!--
   <turboFilter class="ch.qos.logback.classic.turbo.MDCFilter">
     <MDCKey>userid</MDCKey>
     <Value>sebastien</Value>
     <OnMatch>ACCEPT</OnMatch>
   </turboFilter>
+  -->
 
-
-  <appender name="SIFT"
+ <appender name="SIFT"
     class="ch.qos.logback.classic.sift.SiftingAppender">
     <discriminator>
       <Key>userid</Key>
@@ -64,8 +73,7 @@
     </sift>
   </appender>
 
-
-  <!-- JMX Configurator  -->
+  
   <jmxConfigurator />
 
 
