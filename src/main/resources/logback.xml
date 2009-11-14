@@ -16,7 +16,7 @@
     <rollingPolicy
       class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
       <FileNamePattern>
-        logFile.%d{yyyy-MM-dd_HH-mm}.log
+        logFile.%d{yyyy-MM-dd_HH-mm}.log.zip
       </FileNamePattern>
       <maxHistory>5</maxHistory>
     </rollingPolicy>
@@ -29,21 +29,13 @@
   </appender>
 
   <!-- Basic Cyclic buffer -->
+  <!--
   <appender name="CYCLIC"
-            class="ch.qos.logback.core.read.CyclicBufferAppender">
-    <filter class="ch.qos.logback.core.filter.EvaluatorFilter">
-      <evaluator name="loggingTaskEval">
-        <expression>
-          logger.contains("LoggingTask") &amp;&amp;
-          message.contains("Howdydy-diddly-ho") &amp;&amp;
-          (timeStamp - loggerContext.getBirthTime()) >= 20000
-        </expression>
-      </evaluator>
-			<OnMatch>DENY</OnMatch>
-    </filter>
+            class="ch.qos.logback.core.read.CyclicBufferAppender"> 
     <MaxSize>512</MaxSize>
   </appender>
-  
+  -->
+
   <!-- TurboFilter: by MDC value -->
   <!--
   <turboFilter class="ch.qos.logback.classic.turbo.MDCFilter">
@@ -53,27 +45,6 @@
   </turboFilter>
   -->
 
- <appender name="SIFT"
-    class="ch.qos.logback.classic.sift.SiftingAppender">
-    <discriminator>
-      <Key>userid</Key>
-      <DefaultValue>unknown</DefaultValue>
-    </discriminator>
-    <sift>
-      <appender name="FILE-${userid}"
-        class="ch.qos.logback.core.FileAppender">
-        <File>${userid}.log</File>
-        <Append>false</Append>
-        <layout>
-          <Pattern>
-            %d [%thread] %-55(%-5level %10mdc %logger{35}) - %msg%n
-          </Pattern>
-        </layout>
-      </appender>
-    </sift>
-  </appender>
-
-  
   <jmxConfigurator />
 
 
@@ -81,7 +52,6 @@
     <appender-ref ref="STDOUT" />
     <appender-ref ref="FILE" />
     <appender-ref ref="CYCLIC" /> 
-    <appender-ref ref="SIFT" /> 
   </root>
 
 </configuration>
