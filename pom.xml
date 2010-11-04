@@ -9,7 +9,7 @@
   <version>1.0</version>
 
   <properties>
-    <lb.version>0.9.18</lb.version>
+    <lb.version>0.9.26</lb.version>
   </properties>
 
 
@@ -29,26 +29,16 @@
     </dependency>
 
     <dependency>
+      <groupId>ch.qos.logback</groupId>
+      <artifactId>logback-core</artifactId>
+      <version>${lb.version}</version>
+    	<scope>provided</scope>
+    </dependency>
+    <dependency>
     	<groupId>ch.qos.logback</groupId>
     	<artifactId>logback-classic</artifactId>
     	<version>${lb.version}</version>
-    	<scope>compile</scope>
-    	<exclusions>
-        <!--
-    		<exclusion>
-    			<groupId>ch.qos.logback</groupId>
-    			<artifactId>logback-core</artifactId>
-    		</exclusion>
-        -->
-    	</exclusions>
     </dependency>
-
-    <dependency>
-      <groupId>janino</groupId>
-      <artifactId>janino</artifactId>
-      <version>2.4.3</version>
-    </dependency>
-
     <dependency>
     	<groupId>ch.qos.logback</groupId>
     	<artifactId>logback-access</artifactId>
@@ -56,12 +46,13 @@
     	<scope>provided</scope>
     </dependency>
 
+
     <dependency>
-      <groupId>ch.qos.logback</groupId>
-      <artifactId>logback-core</artifactId>
-      <version>${lb.version}</version>
-    	<scope>provided</scope>
+      <groupId>janino</groupId>
+      <artifactId>janino</artifactId>
+      <version>2.4.3</version>
     </dependency>
+
   </dependencies>
 
   <build>
@@ -123,5 +114,35 @@
 			</plugin>
     </plugins>
   </build>
+
+  <reporting>
+    <plugins>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-site-plugin</artifactId>
+        <configuration>
+          <excludeModules>fml</excludeModules>
+          <excludeModules>apt</excludeModules>
+        </configuration>
+      </plugin>
+
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-jxr-plugin</artifactId>
+        <configuration>
+          <aggregate>true</aggregate>
+          <javadocDir>target/site/apidocs/</javadocDir>
+          <linkJavadoc>true</linkJavadoc>
+        </configuration>
+      </plugin>
+    </plugins>
+  </reporting>
+
+  <distributionManagement>
+    <site>
+      <id>pixie</id>
+      <url>scp://pixie.qos.ch/var/www/logback-demo.qos.ch/htdocs/</url>
+    </site>            
+  </distributionManagement>
 
 </project> 

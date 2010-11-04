@@ -5,13 +5,13 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import ch.qos.logback.classic.util.ContextSelectorStaticBinder;
 import org.apache.struts.action.Action;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.slf4j.impl.StaticLoggerBinder;
 
 import ch.qos.logback.access.jetty.RequestLogImpl;
 import ch.qos.logback.access.jetty.RequestLogRegistry;
@@ -48,7 +48,7 @@ public class ChooseModuleAction extends Action {
         request.setAttribute(Constants.STATUS, buf.toString());
 
       } else {
-        List<String> contextNames = StaticLoggerBinder.getSingleton().getContextSelector().getContextNames();
+        List<String> contextNames = ContextSelectorStaticBinder.getSingleton().getContextSelector().getContextNames();
         request.setAttribute(Constants.CONTEXT_LIST, contextNames);
       }
     }

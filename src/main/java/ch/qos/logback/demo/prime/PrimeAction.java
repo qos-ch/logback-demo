@@ -5,42 +5,40 @@ import org.apache.struts.action.Action;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.slf4j.MDC;
+import org.slf4j.*;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 public class PrimeAction extends Action {
 
-  Logger logger = LoggerFactory.getLogger(PrimeAction.class);
+    Logger logger = LoggerFactory.getLogger(PrimeAction.class);
+    Marker SMTP_TRIGGER = MarkerFactory.getMarker("SMTP_TRIGGER");
 
-  public ActionForward execute(ActionMapping actionMapping,
-      ActionForm actionForm, HttpServletRequest request,
-      HttpServletResponse response) throws Exception {
+    public ActionForward execute(ActionMapping actionMapping,
+                                 ActionForm actionForm, HttpServletRequest request,
+                                 HttpServletResponse response) throws Exception {
 
-    if (actionForm != null) {
-      PrimeForm form = (PrimeForm) actionForm;
+        PrimeForm form = (PrimeForm) actionForm;
 
-      Long number = form.getNumber();
-      if(number == 99) {
-    	  logger.info("99 is not a valid value", new Exception("99 is invalid"));
-      }
-      
-      System.out.println("*** userid="+MDC.get(Constants.USERID_MDC_KEY));
-      
-      NumberCruncher nc = new NumberCruncherImpl();
-      Long start = System.currentTimeMillis();
-      Long[] result = nc.factor(number);
-      Long duration = System.currentTimeMillis() - start;
-      logger.info("Results computed in {} ms", duration);
+        Long number = form.getNumber();
+        if (number == 99) {
+            logger.info("99 is a magical value", new Exception("99 is supposedly invalid"));
+        }
 
-      request.setAttribute(Constants.PRIME_NUMBER, number);
-      request.setAttribute(Constants.PRIME_DURATION, duration);
-      request.setAttribute(Constants.PRIME_RESULTS, result);
+        try {
+            NumberCruncher nc = new NumberCruncherImpl();
+            Long start = System.currentTimeMillis();
+            Long[] result = nc.factor(number);
+            Long duration = System.currentTimeMillis() - start;
+            logger.info("Results computed in {} ms", duration);
+
+            request.setAttribute(Constants.PRIME_NUMBER, number);
+            request.setAttribute(Constants.PRIME_DURATION, duration);
+            request.setAttribute(Constants.PRIME_RESULTS, result);
+            return actionMapping.findForward("next");
+        } finally {
+            logger.info(SMTP_TRIGGER, "Prime computation ended");
+        }
     }
-
-    return actionMapping.findForward("next");
-  }
 }
