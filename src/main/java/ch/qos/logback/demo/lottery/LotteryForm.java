@@ -29,7 +29,6 @@ public class LotteryForm extends ActionForm {
       if( getGuessed_number() == null || getGuessed_number().intValue() < 1 ) {
         errors.add("number",new ActionMessage("errors.minNumber"));
       }
-
       return errors;
   }
 }
