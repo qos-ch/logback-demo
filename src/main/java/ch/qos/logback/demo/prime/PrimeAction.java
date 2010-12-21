@@ -21,7 +21,11 @@ public class PrimeAction extends Action {
 
         PrimeForm form = (PrimeForm) actionForm;
 
+
+
         Long number = form.getNumber();
+        MDC.put("number", String.valueOf(number));
+
         if (number == 99) {
             logger.info("99 is a magical value", new Exception("99 is supposedly invalid"));
         }
