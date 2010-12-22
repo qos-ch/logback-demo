@@ -22,6 +22,10 @@
        <pattern>%date%level%logger{24}%msg</pattern>
     </layout>
 
+   <cyclicBufferTracker class="ch.qos.logback.core.spi.CyclicBufferTrackerImpl">
+   </cyclicBufferTracker>
+
+
     <discriminator class="ch.qos.logback.classic.sift.MDCBasedDiscriminator">
        <key>txId</key>
        <defaultValue>default</defaultValue>
