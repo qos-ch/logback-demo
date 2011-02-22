@@ -28,7 +28,7 @@ public class PrimeAction extends Action {
 
 
     Long number = form.getNumber();
-    MDC.put("number", String.valueOf(number));
+    MDC.put("txId", String.valueOf(number));
 
     if (number == 99) {
       logger.info("99 is a magical value", new Exception("99 is supposedly invalid"));
@@ -47,7 +47,7 @@ public class PrimeAction extends Action {
       return actionMapping.findForward("next");
     } finally {
       logger.info(SMTP_TRIGGER, "Prime computation ended");
-      MDC.put("txId", null); // clear txId asap to avoid accidental rebirth
+      MDC.put("txId", null);
     }
   }
 }

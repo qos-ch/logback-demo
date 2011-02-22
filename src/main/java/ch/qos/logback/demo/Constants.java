@@ -6,7 +6,16 @@ public class Constants {
   public static final String USERID_SESSION_KEY = "userid";
   public static final String USERID_MDC_KEY = "userid";
   public static final String USERNAME_PROPERTY = "username";
-  
+
+  public static final String EMAIL_PROPERTY = "email";
+  public static final String EMAIL_MDC_KEY = "email";
+  public static final String EMAIL_SESSION_KEY = "email";
+
+  public static final String SESSION_ID_MDC_KEY = "sessionId";
+
+
+
+
   public static final String GUESSED_NUMBER = "guessed_number";
   public static final Integer WINNING_NUMBER = new Integer(99);
   

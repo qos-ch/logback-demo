@@ -13,6 +13,15 @@ public class LoginForm extends ActionForm {
   private static final long serialVersionUID = 0L;
 
   private String username;
+  private String email;
+
+  public String getEmail() {
+    return email;
+  }
+
+  public void setEmail(String email) {
+    this.email = email;
+  }
 
   public String getUsername() {
     return username;
@@ -21,6 +30,7 @@ public class LoginForm extends ActionForm {
   public void setUsername(String username) {
     this.username = username;
   }
+
   
   public ActionErrors validate ( 
       ActionMapping mapping, HttpServletRequest request ) {
@@ -29,7 +39,9 @@ public class LoginForm extends ActionForm {
       if( getUsername() == null || getUsername().trim().length() == 0 ) {
         errors.add("username",new ActionMessage("errors.username.invalid", getUsername()));
       }
-
+      if( getEmail() == null || getEmail().trim().length() == 0 ) {
+        errors.add("email",new ActionMessage("errors.email.invalid", getUsername()));
+      }
       return errors;
   }
 

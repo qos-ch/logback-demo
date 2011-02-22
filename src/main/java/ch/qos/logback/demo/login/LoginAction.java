@@ -25,11 +25,14 @@ public class LoginAction extends Action {
       LoginForm form = (LoginForm) actionForm;
 
       String username = form.getUsername();
+      String email = form.getEmail();
+
       if (username != null) {
         MDC.put(Constants.USERID_MDC_KEY, username);
-        MDC.put(Constants.USERID_MDC_KEY, username+"+log@gmail.com");
-        logger.info("Login: " + username + " just logged in.");
+        MDC.put(Constants.EMAIL_MDC_KEY, email);
+        logger.info("Login: user {} with email {} just logged in.", username, email);
         request.getSession().setAttribute(Constants.USERID_SESSION_KEY, username);
+        request.getSession().setAttribute(Constants.EMAIL_SESSION_KEY, email);
       }
     }
 

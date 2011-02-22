@@ -1,0 +1,30 @@
+<filter class="ch.qos.logback.core.filter.EvaluatorFilter">
+  <evaluator>
+    <expression>
+      String requestURL = event.getRequestURL().toString();
+      return requestURL.contains("/logback-demo/images/");
+    </expression>
+  </evaluator>
+  <OnMatch>DENY</OnMatch>
+  <OnMismatch>NEUTRAL</OnMismatch>
+</filter>
+
+
+
+<filter class="ch.qos.logback.core.filter.EvaluatorFilter">
+  <evaluator>
+    <matcher>
+      <name>fluffRegex</name>
+      <regex>(images|favicon.ico|/css/.*\.css)</regex>
+      <caseSensitive>false</caseSensitive>
+    </matcher>
+    <expression>
+      String requestURL = event.getRequestURL().toString();
+      return fluffRegex.matches(requestURL);
+    </expression>
+  </evaluator>
+  <OnMatch>DENY</OnMatch>
+  <OnMismatch>NEUTRAL</OnMismatch>
+</filter>
+
+ 

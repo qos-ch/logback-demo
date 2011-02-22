@@ -30,15 +30,8 @@ public class UserServletFilter implements Filter {
     // retrieve the user name
 
     HttpSession session = req.getSession();
-    MDC.put("txId", session.getId());
-    if (principal != null) {
-      String username = principal.getName();
-      registerUsername(username);
-    } else {
-      String value = (String) session
-              .getAttribute(Constants.USERID_SESSION_KEY);
-      registerUsername(value);
-    }
+    MDC.put("sessionId", session.getId());
+    updateMDCValues(session);
 
     try {
       // invoke subsequent filters
@@ -52,13 +45,14 @@ public class UserServletFilter implements Filter {
   public void init(FilterConfig arg0) throws ServletException {
   }
 
-  private void registerUsername(String value) {
-    System.out.println("in registerUsername " + Constants.USERID_MDC_KEY + "=" + value);
-    if (value != null && value.trim().length() > 0) {
-      MDC.put(Constants.USERID_MDC_KEY, value);
-      MDC.put("txEmail", value+"+log@qos.ch");
-      userRegistered = true;
-    }
+  private void updateMDCValues(HttpSession session) {
+    updateMDCSingleValue(session, Constants.USERID_SESSION_KEY, Constants.USERID_MDC_KEY);
+    updateMDCSingleValue(session, Constants.EMAIL_SESSION_KEY, Constants.EMAIL_MDC_KEY);
+  }
+
+  private void updateMDCSingleValue(HttpSession session, String sessionKey, String mdcKey) {
+    String val = (String)session.getAttribute(sessionKey);
+    MDC.put(mdcKey, val);
   }
 
 }
