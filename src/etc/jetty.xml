@@ -1,109 +1,117 @@
 <?xml version="1.0"?>
-<!DOCTYPE Configure PUBLIC "-//Mort Bay Consulting//DTD Configure//EN" "http://jetty.mortbay.org/configure.dtd">
-
+<!DOCTYPE Configure PUBLIC "-//Jetty//Configure//EN" "http://www.eclipse.org/jetty/configure.dtd">
 
 <!-- =============================================================== -->
 <!-- Configure the Jetty Server                                      -->
+<!--                                                                 -->
+<!-- Documentation of this file format can be found at:              -->
+<!-- http://wiki.eclipse.org/Jetty/Reference/jetty.xml_syntax        -->
+<!--                                                                 -->
+<!-- Additional configuration files are available in $JETTY_HOME/etc -->
+<!-- and can be mixed in.  For example:                              -->
+<!--   java -jar start.jar etc/jetty-ssl.xml                         -->
+<!--                                                                 -->
+<!-- See start.ini file for the default configuraton files           -->
 <!-- =============================================================== -->
-<Configure id="Server" class="org.mortbay.jetty.Server">
+
+
+<Configure id="Server" class="org.eclipse.jetty.server.Server">
 
     <!-- =========================================================== -->
     <!-- Server Thread Pool                                          -->
     <!-- =========================================================== -->
     <Set name="ThreadPool">
-      <New class="org.mortbay.thread.BoundedThreadPool">
+      <!-- Default queued blocking threadpool -->
+      <New class="org.eclipse.jetty.util.thread.QueuedThreadPool">
         <Set name="minThreads">10</Set>
-        <Set name="lowThreads">15</Set>
-        <Set name="maxThreads">20</Set>
+        <Set name="maxThreads">200</Set>
+        <Set name="detailedDump">false</Set>
       </New>
     </Set>
 
     <!-- =========================================================== -->
     <!-- Set connectors                                              -->
     <!-- =========================================================== -->
-    <!-- One of each type!                                           -->
-    <!-- =========================================================== -->
 
-    <!-- Use this connector for many frequently idle connections
-         and for threadless continuations.
-    -->    
     <Call name="addConnector">
       <Arg>
-          <New class="org.mortbay.jetty.nio.SelectChannelConnector">
-            <Set name="port"><SystemProperty name="jetty.port" default="8070"/></Set>
-            <Set name="maxIdleTime">30000</Set>
+          <New class="org.eclipse.jetty.server.nio.SelectChannelConnector">
+            <Set name="host"><Property name="jetty.host" /></Set>
+            <Set name="port"><Property name="jetty.port" default="8070"/></Set>
+            <Set name="maxIdleTime">300000</Set>
             <Set name="Acceptors">2</Set>
+            <Set name="statsOn">false</Set>
             <Set name="confidentialPort">8443</Set>
+      	    <Set name="lowResourcesConnections">20000</Set>
+	          <Set name="lowResourcesMaxIdleTime">5000</Set>
           </New>
       </Arg>
     </Call>
-        
+
+  <Call id="MBeanServer" class="java.lang.management.ManagementFactory"
+    name="getPlatformMBeanServer" />
+
+  <!-- =========================================================== -->
+  <!-- Initialize the Jetty MBean container                        -->
+  <!-- =========================================================== -->
+  <New id="MBeanContainer" class="org.eclipse.jetty.jmx.MBeanContainer">
+    <Arg>
+      <Ref id="MBeanServer" />
+    </Arg>
+  </New>
+
+  <!-- Add to the Server to listen for object events -->
+  <Get id="Container" name="container">
+    <Call name="addEventListener">
+      <Arg>
+        <Ref id="MBeanContainer" />
+      </Arg>
+    </Call>
+  </Get>
 
     <!-- =========================================================== -->
     <!-- Set handler Collection Structure                            --> 
     <!-- =========================================================== -->
     <Set name="handler">
-      <New id="handlers" class="org.mortbay.jetty.handler.HandlerCollection">
+      <New id="Handlers" class="org.eclipse.jetty.server.handler.HandlerCollection">
         <Set name="handlers">
-         <Array type="org.mortbay.jetty.Handler">
+         <Array type="org.eclipse.jetty.server.Handler">
            <Item>
-             <New id="contexts" class="org.mortbay.jetty.handler.ContextHandlerCollection"/>
+             <New id="Contexts" class="org.eclipse.jetty.server.handler.ContextHandlerCollection"/>
            </Item>
            <Item>
-             <New id="defaultHandler" class="org.mortbay.jetty.handler.DefaultHandler"/>
+             <New id="DefaultHandler" class="org.eclipse.jetty.server.handler.DefaultHandler"/>
            </Item>
            <Item>
-             <New id="requestLog" class="org.mortbay.jetty.handler.RequestLogHandler"/>
+             <New id="RequestLogHandler" class="org.eclipse.jetty.server.handler.RequestLogHandler"/>
            </Item>
          </Array>
         </Set>
       </New>
     </Set>
-    
-    
-    <Call id="MBeanServer" class="java.lang.management.ManagementFactory" 
-                           name="getPlatformMBeanServer"/>
-    <!-- initialize the Jetty MBean container -->
-    <Get id="Container" name="container">
-      <Call name="addEventListener">
-        <Arg>
-          <New class="org.mortbay.management.MBeanContainer">
-            <Arg><Ref id="MBeanServer"/></Arg>
-            <Set name="managementPort">8072</Set>
-            <Call name="start" />
-          </New>
-        </Arg>
-      </Call>
-    </Get>
 
-    <!-- =========================================================== -->
-    <!-- Configure Request Log                                       -->
-    <!-- =========================================================== -->
-    <!--        -->
-    <Ref id="requestLog">
+
+    <Ref id="RequestLogHandler">
       <Set name="requestLog">
         <New id="requestLogImpl" class="ch.qos.logback.access.jetty.RequestLogImpl">
-        	<Set name="fileName">src/etc/logback-access.xml</Set>
-        	<Set name="name">LogbackRequestLog</Set>
         </New>
       </Set>
     </Ref>
+
 
 
     <!-- =========================================================== -->
     <!-- extra options                                               -->
     <!-- =========================================================== -->
     <Set name="stopAtShutdown">true</Set>
-    <!-- ensure/prevent Server: header being sent to browsers        -->
     <Set name="sendServerVersion">true</Set>
+    <Set name="sendDateHeader">true</Set>
+    <Set name="gracefulShutdown">1000</Set>
+    <Set name="dumpAfterStart">false</Set>
+    <Set name="dumpBeforeStop">false</Set>
 
 </Configure>
 
-
-
-
-
-
-
+  
 
 

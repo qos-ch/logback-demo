@@ -9,7 +9,7 @@
   <version>1.0</version>
 
   <properties>
-    <lb.version>0.9.29-SNAPSHOT</lb.version>
+    <lb.version>0.9.31-SNAPSHOT</lb.version>
   </properties>
 
 
@@ -19,6 +19,13 @@
 	  <artifactId>struts</artifactId>
 	  <version>1.2.9</version>
 	  <scope>compile</scope>
+    </dependency>
+
+    <dependency>
+	  <groupId>commons-logging</groupId>
+	  <artifactId>commons-logging</artifactId>
+	  <version>1.1.1</version>
+	  <!--<scope>provided</scope>-->
     </dependency>
 
     <dependency>
@@ -69,14 +76,18 @@
 
       <plugin>
       	<groupId>org.mortbay.jetty</groupId>
-      	<artifactId>maven-jetty-plugin</artifactId>
+      	<artifactId>jetty-maven-plugin</artifactId>
         <!-- Plugin version == server version -->
-        <version>6.1.12</version>        
+        <version>7.5.1.v20110908</version>
       	<configuration>
       		<scanIntervalSeconds>0</scanIntervalSeconds>
       		<jettyConfig>${basedir}/src/etc/jetty.xml</jettyConfig>
-      	  <!-- <jettyConfig>src/etc/jetty-jmx.xml</jettyConfig> -->
-          
+            <systemProperties>
+              <systemProperty>
+                <name>jetty.home</name>
+                <value>${basedir}/src/</value>
+              </systemProperty>
+            </systemProperties>
       	</configuration>
       	<dependencies>
       		<dependency>
@@ -105,7 +116,7 @@
       </plugin>
 
       <plugin>
-				<groupId>org.apache.maven.plugins</groupId>
+	            <groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-compiler-plugin</artifactId>
 				<configuration>
 					<source>1.5</source>

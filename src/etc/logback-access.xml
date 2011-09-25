@@ -1,8 +1,12 @@
 <configuration>
  
-  <!--<statusListener class="ch.qos.logback.core.status.OnConsoleStatusListener" />  -->
+  <statusListener class="ch.qos.logback.core.status.OnConsoleStatusListener" />
 
- 
+  <appender name="CON" class="ch.qos.logback.core.ConsoleAppender">
+    <encoder>
+      <pattern>%fullRequest%n%n%fullResponse</pattern>
+    </encoder>
+  </appender>
 
   <appender name="FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
     <file>/tmp/access.log</file>
@@ -16,5 +20,6 @@
   </appender>
 
   <appender-ref ref="FILE" />
-  
+  <appender-ref ref="CON" />
+
 </configuration>

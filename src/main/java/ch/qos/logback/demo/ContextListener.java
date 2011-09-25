@@ -23,7 +23,6 @@ public class ContextListener implements ServletContextListener {
   }
 
   public void contextInitialized(ServletContextEvent sce) {
-
     ClassLoader ctcc = Thread.currentThread().getContextClassLoader();
     logger.debug("Classload hashcode is " + ctcc.hashCode());
 
@@ -31,7 +30,7 @@ public class ContextListener implements ServletContextListener {
     servletContextName = servletContext.getServletContextName();
     logger
         .debug("Initializing for ServletContext [" + servletContextName + "]");
-    runner = new Runner(servletContextName, findMBS());
+    runner = new Runner(servletContextName);
 
     try {
       runner.start();
@@ -39,13 +38,6 @@ public class ContextListener implements ServletContextListener {
       logger.error("Failed to configure Logback Demo", e);
     }
 
-  }
-
-  MBeanServer findMBS() {
-    MBeanServer mbs = null;
-    logger.debug("Trying platform Mbean server");
-    mbs = ManagementFactory.getPlatformMBeanServer();
-    return mbs;
   }
 
   public void contextDestroyed(ServletContextEvent arg0) {
