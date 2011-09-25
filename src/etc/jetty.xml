@@ -48,27 +48,6 @@
       </Arg>
     </Call>
 
-  <Call id="MBeanServer" class="java.lang.management.ManagementFactory"
-    name="getPlatformMBeanServer" />
-
-  <!-- =========================================================== -->
-  <!-- Initialize the Jetty MBean container                        -->
-  <!-- =========================================================== -->
-  <New id="MBeanContainer" class="org.eclipse.jetty.jmx.MBeanContainer">
-    <Arg>
-      <Ref id="MBeanServer" />
-    </Arg>
-  </New>
-
-  <!-- Add to the Server to listen for object events -->
-  <Get id="Container" name="container">
-    <Call name="addEventListener">
-      <Arg>
-        <Ref id="MBeanContainer" />
-      </Arg>
-    </Call>
-  </Get>
-
     <!-- =========================================================== -->
     <!-- Set handler Collection Structure                            --> 
     <!-- =========================================================== -->
