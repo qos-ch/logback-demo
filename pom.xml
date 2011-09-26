@@ -15,17 +15,17 @@
 
   <dependencies>
     <dependency>
-	  <groupId>struts</groupId>
-	  <artifactId>struts</artifactId>
-	  <version>1.2.9</version>
-	  <scope>compile</scope>
+      <groupId>struts</groupId>
+      <artifactId>struts</artifactId>
+      <version>1.2.9</version>
+      <scope>compile</scope>
     </dependency>
 
     <dependency>
-	  <groupId>commons-logging</groupId>
-	  <artifactId>commons-logging</artifactId>
-	  <version>1.1.1</version>
-	  <!--<scope>provided</scope>-->
+      <groupId>commons-logging</groupId>
+      <artifactId>commons-logging</artifactId>
+      <version>1.1.1</version>
+      <!--<scope>provided</scope>-->
     </dependency>
 
     <dependency>
@@ -39,18 +39,18 @@
       <groupId>ch.qos.logback</groupId>
       <artifactId>logback-core</artifactId>
       <version>${lb.version}</version>
-    	<scope>provided</scope>
+      <scope>provided</scope>
     </dependency>
     <dependency>
-    	<groupId>ch.qos.logback</groupId>
-    	<artifactId>logback-classic</artifactId>
-    	<version>${lb.version}</version>
-    </dependency>
-    <dependency>
-    	<groupId>ch.qos.logback</groupId>
-    	<artifactId>logback-access</artifactId>
+      <groupId>ch.qos.logback</groupId>
+      <artifactId>logback-classic</artifactId>
       <version>${lb.version}</version>
-    	<scope>provided</scope>
+    </dependency>
+    <dependency>
+      <groupId>ch.qos.logback</groupId>
+      <artifactId>logback-access</artifactId>
+      <version>${lb.version}</version>
+      <scope>provided</scope>
     </dependency>
 
 
@@ -75,36 +75,36 @@
       </plugin>
 
       <plugin>
-      	<groupId>org.mortbay.jetty</groupId>
-      	<artifactId>jetty-maven-plugin</artifactId>
+        <groupId>org.mortbay.jetty</groupId>
+        <artifactId>jetty-maven-plugin</artifactId>
         <!-- Plugin version == server version -->
         <version>7.5.1.v20110908</version>
-      	<configuration>
-      		<scanIntervalSeconds>0</scanIntervalSeconds>
-      		<jettyConfig>${basedir}/src/etc/jetty.xml</jettyConfig>
-            <systemProperties>
-              <systemProperty>
-                <name>jetty.home</name>
-                <value>${basedir}/src/</value>
-              </systemProperty>
-            </systemProperties>
-      	</configuration>
-      	<dependencies>
-      		<dependency>
-      			<groupId>ch.qos.logback</groupId>
-      			<artifactId>logback-access</artifactId>
+        <configuration>
+          <scanIntervalSeconds>0</scanIntervalSeconds>
+          <jettyConfig>${basedir}/src/etc/jetty.xml</jettyConfig>
+          <systemProperties>
+            <systemProperty>
+              <name>jetty.home</name>
+              <value>${basedir}/src/</value>
+            </systemProperty>
+          </systemProperties>
+        </configuration>
+        <dependencies>
+          <dependency>
+            <groupId>ch.qos.logback</groupId>
+            <artifactId>logback-access</artifactId>
             <version>${lb.version}</version>
-      		</dependency>
-      		<dependency>
-      			<groupId>ch.qos.logback</groupId>
-      			<artifactId>logback-core</artifactId>
-     				<version>${lb.version}</version>
-      		</dependency>
-      		<dependency>
-      			<groupId>janino</groupId>
-      			<artifactId>janino</artifactId>
-      			<version>2.4.3</version>
-      		</dependency>
+          </dependency>
+          <dependency>
+            <groupId>ch.qos.logback</groupId>
+            <artifactId>logback-core</artifactId>
+            <version>${lb.version}</version>
+          </dependency>
+          <dependency>
+            <groupId>janino</groupId>
+            <artifactId>janino</artifactId>
+            <version>2.4.3</version>
+          </dependency>
 
           <dependency>
             <groupId>mx4j</groupId>
@@ -112,17 +112,17 @@
             <version>3.0.1</version>
           </dependency>
 
-      	</dependencies>
+        </dependencies>
       </plugin>
 
       <plugin>
-	            <groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-compiler-plugin</artifactId>
-				<configuration>
-					<source>1.5</source>
-					<target>1.5</target>
-				</configuration>
-			</plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-compiler-plugin</artifactId>
+        <configuration>
+          <source>1.5</source>
+          <target>1.5</target>
+        </configuration>
+      </plugin>
     </plugins>
   </build>
 
@@ -151,7 +151,7 @@
     <site>
       <id>pixie</id>
       <url>scp://pixie.qos.ch/var/www/logback-demo.qos.ch/htdocs/</url>
-    </site>            
+    </site>
   </distributionManagement>
 
 </project> 
