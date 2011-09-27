@@ -84,7 +84,7 @@
           <jettyConfig>${basedir}/src/etc/jetty.xml</jettyConfig>
           <systemProperties>
             <systemProperty>
-              <name>jetty.home</name>
+              <name>xxjetty.home</name>
               <value>${basedir}/src/</value>
             </systemProperty>
           </systemProperties>

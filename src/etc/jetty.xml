@@ -73,6 +73,7 @@
     <Ref id="RequestLogHandler">
       <Set name="requestLog">
         <New id="requestLogImpl" class="ch.qos.logback.access.jetty.RequestLogImpl">
+          <Set name="fileName">src/etc/logback-access.xml</Set>
         </New>
       </Set>
     </Ref>
