@@ -12,7 +12,6 @@
     <lb.version>1.0.7</lb.version>
   </properties>
 
-
   <dependencies>
     <dependency>
       <groupId>struts</groupId>
@@ -53,13 +52,17 @@
       <scope>provided</scope>
     </dependency>
 
-
     <dependency>
       <groupId>janino</groupId>
       <artifactId>janino</artifactId>
       <version>2.4.3</version>
     </dependency>
 
+    <dependency>
+      <groupId>org.eclipse.jetty</groupId>
+      <artifactId>jetty-server</artifactId>
+      <version>9.3.7.v20160115</version>
+    </dependency>
   </dependencies>
 
   <build>
