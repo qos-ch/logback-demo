@@ -60,6 +60,12 @@
       <version>2.4.3</version>
     </dependency>
 
+    <dependency>
+      <groupId>org.eclipse.jetty</groupId>
+      <artifactId>jetty-server</artifactId>
+      <version>8.1.9.v20130131</version>
+    </dependency>
+
   </dependencies>
 
   <build>
@@ -78,7 +84,7 @@
         <groupId>org.mortbay.jetty</groupId>
         <artifactId>jetty-maven-plugin</artifactId>
         <!-- Plugin version == server version -->
-        <version>7.5.1.v20110908</version>
+        <version>8.1.9.v20130131</version>
         <configuration>
           <scanIntervalSeconds>0</scanIntervalSeconds>
           <jettyConfig>${basedir}/src/etc/jetty.xml</jettyConfig>
