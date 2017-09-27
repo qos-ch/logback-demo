@@ -60,6 +60,12 @@
       <version>2.4.3</version>
     </dependency>
 
+    <dependency>
+      <groupId>org.eclipse.jetty</groupId>
+      <artifactId>jetty-maven-plugin</artifactId>
+      <version>9.4.7.v20170914</version>
+    </dependency>
+
   </dependencies>
 
   <build>
@@ -67,7 +73,7 @@
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-war-plugin</artifactId>
-        <version>2.0.1</version>
+        <version>3.1.0</version>
         <configuration>
           <archive>
           </archive>
